@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:beevent_flutter/View/ProfilePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.indigo,
         title: Text(widget.title),
       ),
       body: SingleChildScrollView(
@@ -131,7 +132,30 @@ class _MyHomePageState extends State<MyHomePage> {
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
               ),
-              //make button blue
+            ),
+            const Padding(
+              padding: EdgeInsets.all(20.0),
+            ),
+            ElevatedButton(
+              //onpressed go to profile page
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                );
+              },
+              child: const Text('Go Profile'),
+              //make button square
+              style: ElevatedButton.styleFrom(
+                //make button blue
+                minimumSize: const Size(50, 50),
+                primary: Colors.indigo,
+                //make text white
+                onPrimary: Colors.white,
+                shape: const BeveledRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
+              ),
             ),
           ],
         ),
@@ -140,3 +164,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
