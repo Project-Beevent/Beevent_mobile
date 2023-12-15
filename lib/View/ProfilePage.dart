@@ -1,6 +1,5 @@
-// profile_page.dart
-
 import 'package:flutter/material.dart';
+import 'package:beevent_flutter/View/AddRequestPage.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key});
@@ -43,7 +42,6 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-
               Card(
                 elevation: 5,
                 child: Padding(
@@ -68,7 +66,7 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: EdgeInsets.all(10.0),
               ),
               Card(
                 elevation: 5,
@@ -89,7 +87,6 @@ class ProfilePage extends StatelessWidget {
                       Text('Last Donations: 26 03 2023', style: TextStyle(fontSize: 18)),
                       TextButton(
                         onPressed: () {
-                          // Show a popup instead of navigating to a new screen
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -120,6 +117,40 @@ class ProfilePage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AddRequestPage()));
+        },
+        tooltip: 'Add Request',
+        child: Icon(Icons.add),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_chart_outlined),
+            label: 'Requests',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.ad_units_outlined),
+            label: 'My Requests',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        onTap: (index) {
+          if (index == 2) {
+            // Navigate to the same ProfilePage when the 'Profile' tab is selected
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfilePage()),
+            );
+          } else {
+            // Handle navigation for other tabs if needed
+          }
+        },
       ),
     );
   }

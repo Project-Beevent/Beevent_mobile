@@ -30,7 +30,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +41,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children:
-          <Widget>[
-            //add margin here
+          children: <Widget>[
             const Padding(
               padding: EdgeInsets.all(20.0),
             ),
-
-            //add padding here
             const Padding(
               padding: EdgeInsets.all(20.0),
               child: Text(
@@ -60,7 +55,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-            //add padding here
             const Padding(
               padding: EdgeInsets.all(20.0),
             ),
@@ -84,7 +78,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ElevatedButton(
               onPressed: () {
-                //give alert that you have pushed the button
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -104,9 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
               child: const Text('Login'),
-              //make button square
               style: ElevatedButton.styleFrom(
-                //make button fixed size
                 minimumSize: const Size(250, 50),
                 primary: Colors.indigo,
                 onPrimary: Colors.white,
@@ -121,12 +112,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               onPressed: () {},
               child: const Text('Sign Up'),
-              //make button square
               style: ElevatedButton.styleFrom(
-                //make button blue
                 minimumSize: const Size(250, 50),
                 primary: Colors.indigo,
-                //make text white
                 onPrimary: Colors.white,
                 shape: const BeveledRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -134,35 +122,45 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             const Padding(
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(95.0),
             ),
-            ElevatedButton(
-              //onpressed go to profile page
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfilePage()),
-                );
-              },
-              child: const Text('Go Profile'),
-              //make button square
-              style: ElevatedButton.styleFrom(
-                //make button blue
-                minimumSize: const Size(50, 50),
-                primary: Colors.indigo,
-                //make text white
-                onPrimary: Colors.white,
-                shape: const BeveledRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
+            BottomNavigationBar(
+              //make the bar fixed on the bottom
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
                 ),
-              ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.mail),
+                  label: 'Messages',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  label: 'Profile',
+                ),
+              ],
+              currentIndex: _selectedIndex,
+              onTap: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+
+                // Handle navigation based on index
+                switch (_selectedIndex) {
+                  case 2: // Profile tab
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ProfilePage()),
+                    );
+                    break;
+                // Add cases for other tabs as needed
+                }
+              },
             ),
           ],
         ),
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
-
-
