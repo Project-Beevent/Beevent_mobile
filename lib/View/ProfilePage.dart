@@ -1,8 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:beevent_flutter/View/Requests.dart';
 import 'package:beevent_flutter/View/AddRequestPage.dart';
+import 'package:beevent_flutter/Model/Person.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key});
+import '../Model/Repository/DatabaseOperations.dart'; // Person sınıfını ekledik
+
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  final DatabaseOperation databaseOperation = DatabaseOperation();
+  late Future<String?> firstPersonName;
+
+  @override
+  void initState() {
+    super.initState();
+    firstPersonName = databaseOperation.getFirstPersonName();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +50,29 @@ class ProfilePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                'Name',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
+              FutureBuilder<String?>(
+                future: firstPersonName,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    return Text(
+                      snapshot.data ?? '',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  }
+                },
               ),
               const SizedBox(height: 10),
               Card(
                 elevation: 5,
                 child: Padding(
-                  padding: const EdgeInsets.all(50.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -57,10 +84,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      Text('Email: user@example.com', style: TextStyle(fontSize: 20)),
-                      Text('Phone: 553 335 0444', style: TextStyle(fontSize: 20)),
-                      Text('Gender: Male', style: TextStyle(fontSize: 20)),
-                      Text('Tc No: 12345678910', style: TextStyle(fontSize: 20)),
+                      // Buraya genel bilgiler ekleyebilirsiniz
                     ],
                   ),
                 ),
@@ -71,7 +95,7 @@ class ProfilePage extends StatelessWidget {
               Card(
                 elevation: 5,
                 child: Padding(
-                  padding: const EdgeInsets.all(50.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -83,33 +107,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      Text('Status: You can donate!', style: TextStyle(fontSize: 20)),
-                      Text('Last Donations: 26 03 2023', style: TextStyle(fontSize: 18)),
-                      TextButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text('Previous Donations'),
-                                content: const Text('List of Previous Donations'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Close'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        child: Text(
-                          'See your previous donations',
-                          style: TextStyle(fontSize: 15, color: Colors.blue),
-                        ),
-                      ),
+                      // Buraya bağış bilgilerini ekleyebilirsiniz
                     ],
                   ),
                 ),
@@ -141,14 +139,16 @@ class ProfilePage extends StatelessWidget {
           ),
         ],
         onTap: (index) {
-          if (index == 2) {
-            // Navigate to the same ProfilePage when the 'Profile' tab is selected
+          if (index == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Requests()),
+            );
+          } else if (index == 2) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ProfilePage()),
             );
-          } else {
-            // Handle navigation for other tabs if needed
           }
         },
       ),
