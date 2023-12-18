@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:beevent_flutter/View/Requests.dart';
 import 'package:beevent_flutter/View/AddRequestPage.dart';
 import 'package:beevent_flutter/Model/Person.dart';
+import '../Model/Repository/DatabaseOperations.dart';
 
-import '../Model/Repository/DatabaseOperations.dart'; // Person sınıfını ekledik
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -13,12 +13,15 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final DatabaseOperation databaseOperation = DatabaseOperation();
   late Future<String?> firstPersonName;
+  late Future<List<Person>> personList;
 
   @override
   void initState() {
     super.initState();
     firstPersonName = databaseOperation.getFirstPersonName();
+    //personList = databaseOperation.fetchData();
   }
+
 
   @override
   Widget build(BuildContext context) {
