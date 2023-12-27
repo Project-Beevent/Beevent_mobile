@@ -16,8 +16,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
+        scaffoldBackgroundColor: Colors.grey[200],
       ),
       home: const MyHomePage(title: 'Login'),
+      color: Colors.red,
     );
   }
 }
@@ -37,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.blueGrey,
         title: Text(widget.title),
       ),
       body: SingleChildScrollView(
@@ -51,8 +53,17 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text(
                 'Welcome to KanVer',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 25,
                   fontWeight: FontWeight.bold,
+                  color: Colors.blueGrey, // Set a different color
+                  shadows: [
+                    Shadow(
+                      color: Colors.black,
+                      offset: Offset(2, 2), // You can adjust the offset to control the shadow's position
+                      blurRadius: 4, // You can adjust the blur radius for a softer or sharper shadow
+                    ),
+
+                  ],
                 ),
               ),
             ),
@@ -100,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: const Text('Login'),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(250, 50),
-                primary: Colors.indigo,
+                primary: Colors.red,
                 onPrimary: Colors.white,
                 shape: const BeveledRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -115,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: const Text('Sign Up'),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(250, 50),
-                primary: Colors.indigo,
+                primary: Colors.red,
                 onPrimary: Colors.white,
                 shape: const BeveledRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(5)),

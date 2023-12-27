@@ -28,7 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.blueGrey,
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.notifications),
@@ -74,6 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 10),
               Card(
                 elevation: 5,
+                color: Colors.grey[200],
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
@@ -84,6 +85,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black,
+                              blurRadius: 2,
+                              offset: Offset(1, 1),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 15),
@@ -97,6 +106,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               Card(
                 elevation: 5,
+                color: Colors.lightGreen,
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
@@ -107,6 +117,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black,
+                              blurRadius: 2,
+                              offset: Offset(1, 1),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 15),
