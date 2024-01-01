@@ -4,7 +4,6 @@ import 'package:beevent_flutter/View/AddRequestPage.dart';
 import 'package:beevent_flutter/Model/Person.dart';
 import '../Model/Repository/DatabaseOperations.dart';
 
-
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -22,13 +21,19 @@ class _ProfilePageState extends State<ProfilePage> {
     //personList = databaseOperation.fetchData();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.amber,
       appBar: AppBar(
         title: const Text('Profile'),
-        backgroundColor: Colors.blueGrey,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.deepOrangeAccent, Colors.orangeAccent, Colors.deepOrange],
+            ),
+          ),
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.notifications),
@@ -74,7 +79,7 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 10),
               Card(
                 elevation: 5,
-                color: Colors.grey[200],
+                color: Colors.limeAccent,
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
@@ -85,7 +90,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Colors.white,
                           shadows: [
                             Shadow(
                               color: Colors.black,
@@ -106,7 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               Card(
                 elevation: 5,
-                color: Colors.lightGreen,
+                color: Colors.orangeAccent,
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
@@ -117,7 +122,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Colors.white,
                           shadows: [
                             Shadow(
                               color: Colors.black,

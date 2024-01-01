@@ -2,176 +2,221 @@ import 'package:flutter/material.dart';
 import 'package:beevent_flutter/View/ProfilePage.dart';
 import 'package:beevent_flutter/View/Requests.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() => runApp(
+  MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: HomePage(),
+  ),
+);
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'KanVer App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
-        useMaterial3: true,
-        scaffoldBackgroundColor: Colors.grey[200],
-      ),
-      home: const MyHomePage(title: 'Login'),
-      color: Colors.red,
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  void _showLoginSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Login Successful'),
+          content: Text('You have successfully logged in.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+  void _handleLogin() {
+    // Add your authentication logic here (check email and password)
+    // For simplicity, let's assume hardcoded values for email and password
+    String enteredEmail = "test@example.com";
+    String enteredPassword = "password";
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
+    // Replace the following condition with your authentication logic
+    if (emailController.text == enteredEmail && passwordController.text == enteredPassword) {
+      _showLoginSuccessDialog();
+    } else {
+      // Show an error message or handle authentication failure
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Login Failed'),
+            content: Text('Invalid email or password. Please try again.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
-        title: Text(widget.title),
-      ),
-      body: SingleChildScrollView(
+      body: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              colors: [Colors.limeAccent, Colors.orangeAccent, Colors.deepOrange]),
+        ),
         child: Column(
           children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.all(20.0),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Text(
-                'Welcome to KanVer',
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueGrey, // Set a different color
-                  shadows: [
-                    Shadow(
-                      color: Colors.black,
-                      offset: Offset(2, 2), // You can adjust the offset to control the shadow's position
-                      blurRadius: 4, // You can adjust the blur radius for a softer or sharper shadow
-                    ),
-
-                  ],
-                ),
+            SizedBox(height: 80,),
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "LogIn",
+                    style: TextStyle(color: Colors.white, fontSize: 40),
+                  ),
+                  SizedBox(height: 10,),
+                  Text(
+                    "Welcome to KanVer",
+                    style: TextStyle(color: Colors.black, fontSize: 40, fontStyle: FontStyle.italic),
+                  ),
+                ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(20.0),
-            ),
-            const TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'User Mail',
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(20.0),
-            ),
-            const TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Password',
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(40.0),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Login'),
-                      content: const Text('You have logged in successfully'),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('OK'),
+            SizedBox(height: 20,),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white60,
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(60), topRight: Radius.circular(60))),
+                child: Padding(
+                  padding: EdgeInsets.all(30),
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 60,),
+                      Container(
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color.fromRGBO(225, 95, 27, .3),
+                                  blurRadius: 20,
+                                  offset: Offset(0, 10))
+                            ]),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  border: Border(bottom: BorderSide(color: Colors.grey))),
+                              child: TextField(
+                                controller: emailController,
+                                decoration: InputDecoration(
+                                    hintText: "Email",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  border: Border(bottom: BorderSide(color: Colors.grey))),
+                              child: TextField(
+                                controller: passwordController,
+                                decoration: InputDecoration(
+                                    hintText: "Password",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    border: InputBorder.none),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: const Text('Login'),
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(250, 50),
-                primary: Colors.red,
-                onPrimary: Colors.white,
-                shape: const BeveledRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                      ),
+                      SizedBox(height: 40,),
+                      ElevatedButton(
+                        onPressed: _handleLogin,
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.orange, // Set the button color to orange
+                          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20), // Set padding to match Sign Up button
+                        ),
+                        child: Text(
+                          "LogIn",
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(height: 40,),
+                      Container(
+                        height: 50,
+                        margin: EdgeInsets.symmetric(horizontal: 50),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50), color: Colors.indigo),
+                        child: Center(
+                          child: Text(
+                            "Sign Up",
+                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(20.0),
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text('Sign Up'),
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(250, 50),
-                primary: Colors.red,
-                onPrimary: Colors.white,
-                shape: const BeveledRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(95.0),
-            ),
-            BottomNavigationBar(
-              //make the bar fixed on the bottom
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.mail),
-                  label: 'Messages',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'Profile',
-                ),
-              ],
-              currentIndex: _selectedIndex,
-              onTap: (index) {
-                setState(() {
-                  _selectedIndex = index;
-                });
-
-                // Handle navigation based on index
-                switch (_selectedIndex) {
-                  case 2: // Profile tab
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ProfilePage()),
-                    );
-                    break;
-                // Add cases for other tabs as needed
-                }
-              },
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.mail),
+            label: 'Messages',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+
+          // Handle navigation based on index
+          switch (_selectedIndex) {
+            case 2: // Profile tab
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage()),
+              );
+              break;
+          // Add cases for other tabs as needed
+          }
+        },
       ),
     );
   }
