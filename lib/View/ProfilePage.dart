@@ -18,7 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     firstPersonName = databaseOperation.getFirstPersonName();
-    //personList = databaseOperation.fetchData();
+    personList = databaseOperation.fetchData();
   }
 
   @override
@@ -103,43 +103,33 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      // Buraya genel bilgiler ekleyebilirsiniz
-                    ],
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(10.0),
-              ),
-              Card(
-                elevation: 5,
-                color: Colors.orangeAccent,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Donations',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          shadows: [
-                            Shadow(
-                              color: Colors.black,
-                              blurRadius: 2,
-                              offset: Offset(1, 1),
-                            ),
-                          ],
-                        ),
+                      FutureBuilder<List<Person>>(
+                        future: personList,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                            Person person = snapshot.data![0];
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Name: ${person.name}'),
+                                Text('Age: ${person.name.toString()}'),
+                                // Diğer genel bilgileri buraya ekleyebilirsiniz
+                              ],
+                            );
+                          } else {
+                            return Text('No data available');
+                          }
+                        },
                       ),
-                      const SizedBox(height: 15),
-                      // Buraya bağış bilgilerini ekleyebilirsiniz
                     ],
                   ),
                 ),
               ),
+              // ... Diğer kodlar ...
             ],
           ),
         ),

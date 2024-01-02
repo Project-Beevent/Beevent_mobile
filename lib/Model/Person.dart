@@ -6,7 +6,7 @@ class Person {
 
   factory Person.fromJson(Map<String, dynamic> json) {
     return Person(
-      name: json['name'],
+      name: json['fullName'],
       surname: json['surname'],
     );
   }

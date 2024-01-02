@@ -5,7 +5,7 @@ import 'package:beevent_flutter/Model/Person.dart';
 class DatabaseOperation {
   Future<List<Person>> fetchData() async {
     try {
-      final response = await http.get(Uri.parse('http://[::1]:3001/posts'));
+      final response = await http.get(Uri.parse('http://20.241.134.230/users'));
       if (response.statusCode == 200) {
         List<dynamic> jsonList = json.decode(response.body);
         List<Person> personList = jsonList.map((json) => Person.fromJson(json)).toList();
@@ -24,21 +24,23 @@ class DatabaseOperation {
 
   Future<String?> getFirstPersonName() async {
     try {
-      final response = await http.get(Uri.parse('https://siktigiminprojesi-default-rtdb.europe-west1.firebasedatabase.app/.json'));
+      final response = await http.get(Uri.parse('http://20.241.134.230/users'));
+
       if (response.statusCode == 200) {
-        String jsonData = response.body;
+        List<dynamic> jsonDataList = json.decode(response.body);
 
-
-        Map<String, dynamic> jsonDataMap = json.decode(jsonData);
-
-
-        var firstPersonKey = jsonDataMap.keys.first;
-        return jsonDataMap[firstPersonKey];
+        if (jsonDataList.isNotEmpty) {
+          var firstPersonName = jsonDataList[0]['fullName'];
+          print(jsonDataList[0]['fullName'] + ' is the first person name');
+          return firstPersonName;
+        } else {
+          print('Error: Empty JSON list');
+        }
       } else {
         print('Error fetching first person name: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching first person name2: $e');
+      print('Error fetching first person name: $e');
     }
     return null;
   }

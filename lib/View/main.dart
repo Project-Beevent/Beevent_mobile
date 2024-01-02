@@ -71,6 +71,12 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void _handleSignUp() {
+    // Add your authentication logic here (check email and password)
+    // For simplicity, let's assume hardcoded values for email and password
+
+        }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -166,16 +172,15 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(height: 40,),
-                      Container(
-                        height: 50,
-                        margin: EdgeInsets.symmetric(horizontal: 50),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50), color: Colors.indigo),
-                        child: Center(
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                          ),
+                      ElevatedButton(
+                        onPressed: _handleSignUp,
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.orange, // Set the button color to orange
+                          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20), // Set padding to match Sign Up button
+                        ),
+                        child: Text(
+                          "Sign Up",
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -222,3 +227,5 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
