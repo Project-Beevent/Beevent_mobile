@@ -15,7 +15,15 @@ class Requests extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('All Requests'),
-        backgroundColor: Colors.deepOrangeAccent,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Colors.deepOrangeAccent, Colors.orange],
+            ),
+          ),
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.add_box_sharp),
@@ -24,38 +32,47 @@ class Requests extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView.builder(
-          itemCount: requestsList.length,
-          itemBuilder: (context, index) {
-            return Card(
-              elevation: 5,
-              margin: EdgeInsets.symmetric(vertical: 10),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailedRequestPage(requestsList[index]),
-                    ),
-                  );
-                },
-                child: ExpansionTile(
-                  title: Text(requestsList[index].title),
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(requestsList[index].details),
-                    ),
-                  ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.orange.shade50, Colors.orange.shade100],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ListView.builder(
+            itemCount: requestsList.length,
+            itemBuilder: (context, index) {
+              return Card(
+                elevation: 5,
+                margin: EdgeInsets.symmetric(vertical: 10),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            DetailedRequestPage(requestsList[index]),
+                      ),
+                    );
+                  },
+                  child: ExpansionTile(
+                    title: Text(requestsList[index].title),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(requestsList[index].details),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
   }
 }
-
