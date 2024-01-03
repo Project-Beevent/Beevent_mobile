@@ -22,7 +22,7 @@
       }
     }
 
-    Future<Person?> getPerson(String email) async {
+    Future<String?> getPersonData(String email) async {
       try {
         final response = await http.get(Uri.parse('http://20.241.134.230/users'));
 
@@ -32,20 +32,34 @@
           if (jsonDataList.isNotEmpty) {
             for (var jsonData in jsonDataList) {
               if (jsonData['email'] == email) {
-                return Person.fromJson(jsonData);
+                // Person nesnesinden gelen verileri birleştirilmiş bir string olarak oluştur
+                String personData = '''
+              Name: ${jsonData['fullName']}
+              Email: ${jsonData['email']}
+              Phone: ${jsonData['phone']}
+              Gender: ${jsonData['gender']}
+              Blood Type: ${jsonData['bloodType']}
+              Age: ${jsonData['age']}
+              Last Donation Date: ${jsonData['lastDonationDate']}
+              Donation Count: ${jsonData['donationCount']}
+            ''';
+                return personData;
               }
             }
           } else {
             print('Error: Empty JSON list');
           }
         } else {
-          print('Error fetching person: ${response.statusCode}');
+          print('Error fetching person data: ${response.statusCode}');
         }
       } catch (e) {
-        print('Error fetching person: $e');
+        print('Error fetching person data: $e');
       }
+
+      // Hata durumunda veya eşleşen veri bulunamadığında null döndürelim
       return null;
     }
+
 
 
 

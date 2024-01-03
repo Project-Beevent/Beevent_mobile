@@ -14,18 +14,14 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final DatabaseOperation databaseOperation = DatabaseOperation();
-  Person? person;
+  late Future<String?> personData = Future.value(null);
   late Future<List<Person>> personList;
 
   @override
   void initState() {
     super.initState();
     personList = databaseOperation.fetchData();
-    databaseOperation.getPerson(widget.userEmail).then((retrievedPerson) {
-      setState(() {
-        person = retrievedPerson;
-      });
-    });
+    personData = databaseOperation.getPersonData(widget.userEmail);
   }
 
   @override
@@ -67,26 +63,6 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              FutureBuilder<String?>(
-                future: databaseOperation.getPerson(widget.userEmail).then((retrievedPerson) {
-                  return retrievedPerson?.name.toString();
-                }),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    return Text(
-                      snapshot.data ?? '',
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    );
-                  }
-                },
-              ),
               const SizedBox(height: 10),
               Card(
                 elevation: 5,
@@ -112,29 +88,20 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      FutureBuilder<List<Person>>(
-                        future: personList,
+                      FutureBuilder<String?>(
+                        future: personData,
                         builder: (context, snapshot) {
                           if (snapshot.connectionState == ConnectionState.waiting) {
                             return CircularProgressIndicator();
                           } else if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
-                          } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                            List<Person> people = snapshot.data!;
-                            Person person = people[0];
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Name: ${person.name}'),
-                                Text('Email: ${person.email}'),
-                                Text('Phone: ${person.phone}'),
-                                Text('Gender: ${person.gender}'),
-                                Text('Blood Type: ${person.bloodType}'),
-                                Text('Age: ${person.age}'),
-                                Text('Last Donation Date: ${person.lastDonationDate}'),
-                                Text('Donation Count: ${person.donationCount}'),
-                                // Diğer genel bilgileri buraya ekleyebilirsiniz
-                              ],
+                          } else if (snapshot.hasData) {
+                            return Text(
+                              snapshot.data ?? '',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
                             );
                           } else {
                             return Text('No data available');
@@ -145,7 +112,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              // ... Diğer kodlar ...
             ],
           ),
         ),
