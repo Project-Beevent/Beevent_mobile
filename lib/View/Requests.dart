@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:beevent_flutter/View/DetailedRequestPage.dart';
+import 'package:beevent_flutter/View/EditRequestPage.dart'; // Ekledim
 
 class Requests extends StatelessWidget {
   List<RequestData> requestsList = [
@@ -72,6 +73,13 @@ class Requests extends StatelessWidget {
             },
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => EditRequestPage())); // Değişiklik burada HABERIN OLSUN
+        },
+        tooltip: 'Edit Request',
+        child: Icon(Icons.edit),
       ),
     );
   }

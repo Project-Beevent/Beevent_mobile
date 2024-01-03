@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
 
-class AddRequestPage extends StatefulWidget {
-  const AddRequestPage({Key? key}) : super(key: key);
+class EditRequestPage extends StatefulWidget {
+  final String? initialCity;
+  final String? initialBloodType;
+  final String? initialHospital;
+  final String? initialTitle;
+  final String? initialDescription;
+
+  const EditRequestPage({
+    Key? key,
+    this.initialCity,
+    this.initialBloodType,
+    this.initialHospital,
+    this.initialTitle,
+    this.initialDescription,
+  }) : super(key: key);
 
   @override
-  _AddRequestPageState createState() => _AddRequestPageState();
+  _EditRequestPageState createState() => _EditRequestPageState();
 }
 
-class _AddRequestPageState extends State<AddRequestPage> {
+class _EditRequestPageState extends State<EditRequestPage> {
   String? selectedCity;
   String? selectedBloodType;
   String? selectedHospital;
@@ -15,10 +28,21 @@ class _AddRequestPageState extends State<AddRequestPage> {
   TextEditingController descriptionController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    // Set initial values based on passed data
+    selectedCity = widget.initialCity;
+    selectedBloodType = widget.initialBloodType;
+    selectedHospital = widget.initialHospital;
+    titleController.text = widget.initialTitle ?? '';
+    descriptionController.text = widget.initialDescription ?? '';
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New Request'),
+        title: const Text('Edit Request'),
         backgroundColor: Colors.deepOrangeAccent,
       ),
       body: SingleChildScrollView(
@@ -183,7 +207,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {},
-                  child: Text('Create Request'),
+                  child: Text('Edit Request'),
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(380, 50),
                     backgroundColor: Colors.amber,
@@ -226,10 +250,11 @@ class _AddRequestPageState extends State<AddRequestPage> {
   }
 }
 
+
 void main() {
   runApp(
     const MaterialApp(
-      home: AddRequestPage(),
+      home: EditRequestPage(),
     ),
   );
 }
