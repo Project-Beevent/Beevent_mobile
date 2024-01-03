@@ -187,7 +187,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(380, 50),
                     backgroundColor: Colors.amber,
-                    onPrimary: Colors.white,
+                    foregroundColor: Colors.white,
                     shape: BeveledRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5)),
                     ),
@@ -199,8 +199,8 @@ class _AddRequestPageState extends State<AddRequestPage> {
                   child: Text('Clear'),
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(380, 50),
-                    primary: Colors.red,
-                    onPrimary: Colors.white,
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
                     shape: BeveledRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5)),
                     ),

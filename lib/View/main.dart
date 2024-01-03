@@ -156,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                       ElevatedButton(
                         onPressed: _handleLogin,
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.orange, // Set the button color to orange
+                          backgroundColor: Colors.orange, // Set the button color to orange
                           padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20), // Set padding to match Sign Up button
                         ),
                         child: Text(
