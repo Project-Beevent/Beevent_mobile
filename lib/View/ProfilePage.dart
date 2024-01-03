@@ -5,24 +5,27 @@ import 'package:beevent_flutter/Model/Person.dart';
 import '../Model/Repository/DatabaseOperations.dart';
 
 class ProfilePage extends StatefulWidget {
-  final String userEmail; // userEmail parametresini ekleyin
+  final String userEmail;
 
-  ProfilePage({required this.userEmail}); // constructor'ı güncelleyin
+  ProfilePage({required this.userEmail});
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-
 class _ProfilePageState extends State<ProfilePage> {
   final DatabaseOperation databaseOperation = DatabaseOperation();
-  late Future<String?> firstPersonName;
+  Person? person;
   late Future<List<Person>> personList;
 
   @override
   void initState() {
     super.initState();
-    firstPersonName = databaseOperation.getFirstPersonName();
     personList = databaseOperation.fetchData();
+    databaseOperation.getPerson(widget.userEmail).then((retrievedPerson) {
+      setState(() {
+        person = retrievedPerson;
+      });
+    });
   }
 
   @override
@@ -65,7 +68,9 @@ class _ProfilePageState extends State<ProfilePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               FutureBuilder<String?>(
-                future: firstPersonName,
+                future: databaseOperation.getPerson(widget.userEmail).then((retrievedPerson) {
+                  return retrievedPerson?.name.toString();
+                }),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
@@ -115,12 +120,19 @@ class _ProfilePageState extends State<ProfilePage> {
                           } else if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
                           } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                            Person person = snapshot.data![0];
+                            List<Person> people = snapshot.data!;
+                            Person person = people[0];
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('Name: ${person.name}'),
-                                Text('Age: ${person.name.toString()}'),
+                                Text('Email: ${person.email}'),
+                                Text('Phone: ${person.phone}'),
+                                Text('Gender: ${person.gender}'),
+                                Text('Blood Type: ${person.bloodType}'),
+                                Text('Age: ${person.age}'),
+                                Text('Last Donation Date: ${person.lastDonationDate}'),
+                                Text('Donation Count: ${person.donationCount}'),
                                 // Diğer genel bilgileri buraya ekleyebilirsiniz
                               ],
                             );
