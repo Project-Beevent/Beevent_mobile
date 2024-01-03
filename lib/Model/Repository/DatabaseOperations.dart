@@ -31,7 +31,6 @@ class DatabaseOperation {
 
         if (jsonDataList.isNotEmpty) {
           var firstPersonName = jsonDataList[0]['fullName'];
-          print(jsonDataList[0]['fullName'] + ' is the first person name');
           return firstPersonName;
         } else {
           print('Error: Empty JSON list');

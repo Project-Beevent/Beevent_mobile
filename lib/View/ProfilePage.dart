@@ -5,9 +5,13 @@ import 'package:beevent_flutter/Model/Person.dart';
 import '../Model/Repository/DatabaseOperations.dart';
 
 class ProfilePage extends StatefulWidget {
+  final String userEmail; // userEmail parametresini ekleyin
+
+  ProfilePage({required this.userEmail}); // constructor'ı güncelleyin
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
+
 
 class _ProfilePageState extends State<ProfilePage> {
   final DatabaseOperation databaseOperation = DatabaseOperation();
@@ -165,7 +169,7 @@ class _ProfilePageState extends State<ProfilePage> {
           } else if (index == 2) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ProfilePage()),
+              MaterialPageRoute(builder: (context) => ProfilePage(userEmail: widget.userEmail)),
             );
           }
         },

@@ -20,35 +20,23 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  void _showLoginSuccessDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Login Successful'),
-          content: Text('You have successfully logged in.'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
+  void _showLoginSuccessDialog(userEmail) {
+    //go to the profile page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ProfilePage(userEmail: userEmail)),
     );
   }
 
   void _handleLogin() {
     // Add your authentication logic here (check email and password)
     // For simplicity, let's assume hardcoded values for email and password
-    String enteredEmail = "test@example.com";
-    String enteredPassword = "password";
+    String enteredEmail = "mado.@example.com";
+    String enteredPassword = "password123";
 
     // Replace the following condition with your authentication logic
     if (emailController.text == enteredEmail && passwordController.text == enteredPassword) {
-      _showLoginSuccessDialog();
+      _showLoginSuccessDialog(enteredEmail);
     } else {
       // Show an error message or handle authentication failure
       showDialog(
@@ -215,9 +203,24 @@ class _HomePageState extends State<HomePage> {
           // Handle navigation based on index
           switch (_selectedIndex) {
             case 2: // Profile tab
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ProfilePage()),
+              // you need to authenticate the user first
+              // then popup this message
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Not Logged In'),
+                    content: Text('Please log in first.'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('OK'),
+                      ),
+                    ],
+                  );
+                },
               );
               break;
           // Add cases for other tabs as needed
