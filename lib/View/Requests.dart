@@ -115,7 +115,7 @@ class _RequestsState extends State<Requests> {
                   ),
                 ),
               );
-              },
+            },
           ),
         ),
       ),
