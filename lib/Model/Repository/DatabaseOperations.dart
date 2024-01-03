@@ -34,7 +34,7 @@ import '../RequestDetailModels.dart';
           if (jsonDataList.isNotEmpty) {
             for (var jsonData in jsonDataList) {
               if (jsonData['email'] == email) {
-                // Person nesnesinden gelen verileri birleştirilmiş bir string olarak oluştur
+
                 String personData = '''
               Name: ${jsonData['fullName']}
               Email: ${jsonData['email']}
@@ -59,6 +59,58 @@ import '../RequestDetailModels.dart';
       }
 
       return null;
+    }
+
+    Future<void> createRequest(String email, String title, String description, String bloodType, String city, String hospital) async {
+      int userId = 0;
+      int hospitalId = 0;
+      if(hospital == 'Ankara'){
+        hospitalId = 2;
+      }
+      else{
+        hospitalId = 1;
+      };
+      try {
+        final response2 = await http.get(Uri.parse('http://20.241.134.230/users'));
+        if (response2.statusCode == 200) {
+          List<dynamic> jsonDataList = json.decode(response2.body);
+          if (jsonDataList.isNotEmpty) {
+            for (var jsonData in jsonDataList) {
+              if (jsonData['email'] == email) {
+                userId = jsonData['id'].toInt();
+              }
+            }
+          } else {
+            print('Error: Empty JSON list');
+          }
+        } else {
+          print('Error fetching person data: ${response2.statusCode}');
+        }
+
+        final response = await http.post(
+          Uri.parse('http://20.241.134.230/blood_requests/users/$userId/hospitals/$hospitalId'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'title': title,
+            'description': description,
+            'bloodType': bloodType,
+            'status' : "Pending...",
+            'dateRequested' : "2024-06-01",
+          }),
+        );
+        print(userId);
+        print(hospitalId);
+        if (response.statusCode == 201) {
+          print('Request created successfully');
+        } else {
+          print('Error creating request: ${response.statusCode}');
+          print(response.body);
+        }
+      } catch (e) {
+        print('Error creating request: $e');
+      }
     }
 
 

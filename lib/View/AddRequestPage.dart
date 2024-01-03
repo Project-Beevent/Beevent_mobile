@@ -1,8 +1,10 @@
+import 'package:beevent_flutter/Model/Repository/DatabaseOperations.dart';
 import 'package:flutter/material.dart';
 
 class AddRequestPage extends StatefulWidget {
-  const AddRequestPage({Key? key}) : super(key: key);
+  final String userEmail;
 
+  AddRequestPage({required this.userEmail});
   @override
   _AddRequestPageState createState() => _AddRequestPageState();
 }
@@ -13,6 +15,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
   String? selectedHospital;
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  DatabaseOperation databaseOperation = DatabaseOperation();
 
   @override
   Widget build(BuildContext context) {
@@ -129,9 +132,6 @@ class _AddRequestPageState extends State<AddRequestPage> {
                     items: <String>[
                       'Ankara',
                       'İstanbul',
-                      'İzmir',
-                      'Adana',
-                      'Adıyaman',
                     ].map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -160,11 +160,11 @@ class _AddRequestPageState extends State<AddRequestPage> {
                       color: Colors.black,
                     ),
                     items: <String>[
-                      'Florence Nightingale',
-                      'Acıbadem',
-                      'Memorial',
-                      'Medicana',
-                      'Anadolu',
+                      'Medilif',
+                      'MediHaus',
+                      'Medicane',
+                      'Fatih Hospital',
+                      'A Hastane',
                     ].map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -182,7 +182,32 @@ class _AddRequestPageState extends State<AddRequestPage> {
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // fields cannot be empty
+                    if (titleController.text.isEmpty ||
+                        descriptionController.text.isEmpty ||
+                        selectedBloodType == null ||
+                        selectedCity == null ||
+                        selectedHospital == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Please fill all fields'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
+
+                    databaseOperation.createRequest(
+                      widget.userEmail,
+                      titleController.text,
+                      descriptionController.text,
+                      selectedBloodType!,
+                      selectedCity!,
+                      selectedHospital!,
+                    );
+                    _clearFields();
+                  },
                   child: Text('Create Request'),
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(380, 50),
@@ -228,8 +253,8 @@ class _AddRequestPageState extends State<AddRequestPage> {
 
 void main() {
   runApp(
-    const MaterialApp(
-      home: AddRequestPage(),
+    MaterialApp(
+      home: AddRequestPage(userEmail: 'example@email.com'),
     ),
   );
 }

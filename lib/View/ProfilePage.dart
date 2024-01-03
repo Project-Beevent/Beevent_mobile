@@ -118,7 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AddRequestPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AddRequestPage(userEmail: widget.userEmail)));
         },
         tooltip: 'Add Request',
         child: Icon(Icons.add),
