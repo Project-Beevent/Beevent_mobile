@@ -2,7 +2,9 @@
   import 'package:http/http.dart' as http;
   import 'package:beevent_flutter/Model/Person.dart';
 
-  class DatabaseOperation {
+import '../RequestDetailModels.dart';
+
+ class DatabaseOperation {
     Future<List<Person>> fetchData() async {
       try {
         final response = await http.get(Uri.parse('http://20.241.134.230/users'));
@@ -56,14 +58,21 @@
         print('Error fetching person data: $e');
       }
 
-      // Hata durumunda veya eşleşen veri bulunamadığında null döndürelim
       return null;
     }
 
 
+    Future<List<BloodRequest>> fetchBloodRequests() async {
+      final uri = Uri.parse('http://20.241.134.230/blood_requests');
+      final response = await http.get(uri);
 
-
-
+      if (response.statusCode == 200) {
+        List<dynamic> jsonResponse = json.decode(response.body);
+        return jsonResponse.map((data) => BloodRequest.fromJson(data)).toList();
+      } else {
+        throw Exception('Failed to load blood requests');
+      }
+    }
 
   }
 

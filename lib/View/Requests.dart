@@ -1,15 +1,39 @@
+import 'package:beevent_flutter/Model/Repository/DatabaseOperations.dart';
+import 'package:beevent_flutter/Model/RequestDetailModels.dart';
 import 'package:flutter/material.dart';
 import 'package:beevent_flutter/View/DetailedRequestPage.dart';
 import 'package:beevent_flutter/View/EditRequestPage.dart'; // Ekledim
 
-class Requests extends StatelessWidget {
-  List<RequestData> requestsList = [
-    RequestData('Request 1  AB+', 'Details for Request 1'),
-    RequestData('Request 2   A-', 'Details for Request 2'),
-    RequestData('Request 3   0+', 'Details for Request 3'),
-    RequestData('Request 4   A+', 'Details for Request 4'),
-    RequestData('Request 5   B+', 'Details for Request 5'),
-  ];
+import 'package:flutter/material.dart';
+import 'package:beevent_flutter/Model/Repository/DatabaseOperations.dart';
+import 'package:beevent_flutter/View/DetailedRequestPage.dart';
+import 'package:beevent_flutter/View/EditRequestPage.dart';
+
+class Requests extends StatefulWidget {
+  @override
+  _RequestsState createState() => _RequestsState();
+}
+
+class _RequestsState extends State<Requests> {
+  List<BloodRequest> requestsList = []; // Güncellendi
+
+  @override
+  void initState() {
+    super.initState();
+    fetchBloodRequests(); // fetchBloodRequests fonksiyonunu çağır
+  }
+
+  Future<void> fetchBloodRequests() async {
+    try {
+      DatabaseOperation databaseOperation = DatabaseOperation();
+      List<BloodRequest> bloodRequests = await databaseOperation.fetchBloodRequests();
+      setState(() {
+        requestsList = bloodRequests;
+      });
+    } catch (e) {
+      print('Error fetching blood requests: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,24 +83,45 @@ class Requests extends StatelessWidget {
                       ),
                     );
                   },
-                  child: ExpansionTile(
-                    title: Text(requestsList[index].title),
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text(requestsList[index].details),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          ' ${requestsList[index].title}',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'Blood Type: ${requestsList[index].bloodType}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'City: ${requestsList[index].hospital.location.city}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'Description: ${requestsList[index].description}',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );
-            },
+              },
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => EditRequestPage())); // Değişiklik burada HABERIN OLSUN
+          Navigator.push(context, MaterialPageRoute(builder: (context) => EditRequestPage()));
         },
         tooltip: 'Edit Request',
         child: Icon(Icons.edit),
@@ -84,3 +129,4 @@ class Requests extends StatelessWidget {
     );
   }
 }
+
