@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:beevent_flutter/View/DetailedRequestPage.dart';
-import 'package:beevent_flutter/View/EditRequestPage.dart'; // Ekledim
+import 'package:beevent_flutter/View/EditRequestPage.dart';
 
 class Requests extends StatelessWidget {
   List<RequestData> requestsList = [
