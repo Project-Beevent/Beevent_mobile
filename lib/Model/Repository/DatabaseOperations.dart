@@ -47,7 +47,6 @@ import '../RequestDetailModels.dart';
               Gender: ${jsonData['gender']}
               Blood Type: ${jsonData['bloodType']}
               Age: ${jsonData['age']}
-              Last Donation Date: ${jsonData['lastDonationDate']}
               Donation Count: ${jsonData['donationCount']}
             ''';
                return personData;
@@ -70,6 +69,8 @@ import '../RequestDetailModels.dart';
        String bloodType, String city, String hospital) async {
      int userId = 0;
      int hospitalId = 0;
+
+
      if (hospital == 'Ankara') {
        hospitalId = 2;
      }
@@ -181,16 +182,17 @@ import '../RequestDetailModels.dart';
           'bloodType': bloodType,
           'age': age,
           'tcNo': tcNo,
+          'lastDonationDate' : "2024-06-01",
         }),
       );
 
       if (response.statusCode == 201) {
         print('User registered successfully');
-        return true;  // Başarıyla kaydedildiyse true döndür
+        return true;
       } else {
         print('Error registering user: ${response.statusCode}');
         print(response.body);
-        return false;  // Hata durumunda false döndür
+        return false;
       }
     } catch (e) {
       print('Error registering user: $e');

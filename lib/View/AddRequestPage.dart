@@ -103,7 +103,7 @@ class _AddRequestPageState extends State<AddRequestPage> {
                   style: TextStyle(
                     fontSize: 15,
                   ),
-                  maxLines: 5, // Maksimum satır sayısı
+                  maxLines: 5,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Description',
