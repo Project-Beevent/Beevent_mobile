@@ -2,12 +2,8 @@ import 'package:beevent_flutter/Model/Repository/DatabaseOperations.dart';
 import 'package:beevent_flutter/Model/RequestDetailModels.dart';
 import 'package:flutter/material.dart';
 import 'package:beevent_flutter/View/DetailedRequestPage.dart';
-import 'package:beevent_flutter/View/EditRequestPage.dart'; // Ekledim
-
-import 'package:flutter/material.dart';
-import 'package:beevent_flutter/Model/Repository/DatabaseOperations.dart';
-import 'package:beevent_flutter/View/DetailedRequestPage.dart';
 import 'package:beevent_flutter/View/EditRequestPage.dart';
+
 
 class Requests extends StatefulWidget {
   @override
@@ -15,12 +11,12 @@ class Requests extends StatefulWidget {
 }
 
 class _RequestsState extends State<Requests> {
-  List<BloodRequest> requestsList = []; // Güncellendi
+  List<BloodRequest> requestsList = [];
 
   @override
   void initState() {
     super.initState();
-    fetchBloodRequests(); // fetchBloodRequests fonksiyonunu çağır
+    fetchBloodRequests();
   }
 
   Future<void> fetchBloodRequests() async {
@@ -118,13 +114,6 @@ class _RequestsState extends State<Requests> {
             },
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => EditRequestPage()));
-        },
-        tooltip: 'Edit Request',
-        child: Icon(Icons.edit),
       ),
     );
   }

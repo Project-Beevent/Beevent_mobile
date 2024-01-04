@@ -1,6 +1,8 @@
+import 'package:beevent_flutter/Model/Repository/DatabaseOperations.dart';
 import 'package:flutter/material.dart';
 import 'package:beevent_flutter/View/ProfilePage.dart';
 import 'package:beevent_flutter/View/Requests.dart';
+import 'package:beevent_flutter/View/SignUpPage.dart';
 
 void main() => runApp(
   MaterialApp(
@@ -16,7 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-
+  DatabaseOperation databaseOperation = DatabaseOperation();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -28,17 +30,15 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _handleLogin() {
-    // Add your authentication logic here (check email and password)
-    // For simplicity, let's assume hardcoded values for email and password
-    String enteredEmail = "mado.@example.com";
-    String enteredPassword = "password123";
+  void _handleLogin() async {
+    String enteredEmail = emailController.text;
+    String enteredPassword = passwordController.text;
 
-    // Replace the following condition with your authentication logic
-    if (emailController.text == enteredEmail && passwordController.text == enteredPassword) {
+    bool isValid = await databaseOperation.checkUser(enteredEmail, enteredPassword);
+
+    if (isValid) {
       _showLoginSuccessDialog(enteredEmail);
     } else {
-      // Show an error message or handle authentication failure
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -60,10 +60,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _handleSignUp() {
-    // Add your authentication logic here (check email and password)
-    // For simplicity, let's assume hardcoded values for email and password
-
-        }
+    //go to the sign up page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SignUpPage()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +140,7 @@ class _HomePageState extends State<HomePage> {
                                   border: Border(bottom: BorderSide(color: Colors.grey))),
                               child: TextField(
                                 controller: passwordController,
+                                obscureText: true,
                                 decoration: InputDecoration(
                                     hintText: "Password",
                                     hintStyle: TextStyle(color: Colors.grey),
