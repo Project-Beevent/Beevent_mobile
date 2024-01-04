@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
         ),
         child: Column(
           children: <Widget>[
-            SizedBox(height: 80,),
+            SizedBox(height: 25,),
             Padding(
               padding: EdgeInsets.all(20),
               child: Column(
@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 25,),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.all(30),
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 60,),
+                      SizedBox(height: 50,),
                       Container(
                         padding: EdgeInsets.all(20),
                         decoration: BoxDecoration(

@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 10),
               Card(
                 elevation: 5,
-                color: Colors.limeAccent,
+                color: Colors.lightGreen,
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(

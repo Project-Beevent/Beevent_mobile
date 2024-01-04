@@ -19,6 +19,7 @@ class SignUpPage extends StatelessWidget {
         title: Text('Sign Up'),
         backgroundColor: Colors.orange,
       ),
+      backgroundColor: Colors.amber.shade200,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -122,7 +123,7 @@ class SignUpPage extends StatelessWidget {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.orange,
+                  backgroundColor: Colors.orange,
                 ),
                 child: Text('Sign Up'),
               ),
@@ -131,7 +132,7 @@ class SignUpPage extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.grey,
+                  backgroundColor: Colors.grey,
                 ),
                 child: Text('Cancel'),
               ),

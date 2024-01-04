@@ -42,6 +42,7 @@ class _MyRequestsState extends State<MyRequests> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.amber.shade200,
       appBar: AppBar(
         title: Text('My Requests'),
         backgroundColor: Colors.orange,

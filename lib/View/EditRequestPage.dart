@@ -84,7 +84,7 @@ class _EditRequestPageState extends State<EditRequestPage> {
                 ),
                 SizedBox(height: 20),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 128.0),
+                  padding: EdgeInsets.symmetric(horizontal: 12.0),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(5.0),
@@ -148,7 +148,7 @@ class _EditRequestPageState extends State<EditRequestPage> {
                 ),
                 SizedBox(height: 10),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 132.0),
+                  padding: EdgeInsets.symmetric(horizontal: 12.0),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(5.0),
@@ -181,7 +181,7 @@ class _EditRequestPageState extends State<EditRequestPage> {
                 ),
                 SizedBox(height: 10),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 90.0),
+                  padding: EdgeInsets.symmetric(horizontal: 70.0),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(5.0),
