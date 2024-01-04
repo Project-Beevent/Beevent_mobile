@@ -1,3 +1,4 @@
+import 'package:beevent_flutter/Model/Repository/DatabaseOperations.dart';
 import 'package:flutter/material.dart';
 
 class EditRequestPage extends StatefulWidget {
@@ -6,18 +7,25 @@ class EditRequestPage extends StatefulWidget {
   final String? initialHospital;
   final String? initialTitle;
   final String? initialDescription;
+  final int? requestId;
 
-  const EditRequestPage({
+
+
+
+  EditRequestPage({
     Key? key,
     this.initialCity,
     this.initialBloodType,
     this.initialHospital,
     this.initialTitle,
     this.initialDescription,
+    this.requestId,
+
   }) : super(key: key);
 
   @override
   _EditRequestPageState createState() => _EditRequestPageState();
+
 }
 
 class _EditRequestPageState extends State<EditRequestPage> {
@@ -206,7 +214,7 @@ class _EditRequestPageState extends State<EditRequestPage> {
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: _editRequest,
                   child: Text('Edit Request'),
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(380, 50),
@@ -238,6 +246,8 @@ class _EditRequestPageState extends State<EditRequestPage> {
     );
   }
 
+
+
   void _clearFields() {
     // Clear button pressed, clear all fields
     setState(() {
@@ -248,13 +258,11 @@ class _EditRequestPageState extends State<EditRequestPage> {
       descriptionController.clear();
     });
   }
-}
 
-
-void main() {
-  runApp(
-    const MaterialApp(
-      home: EditRequestPage(),
-    ),
-  );
+  void _editRequest() {
+    DatabaseOperation _databaseOperation = DatabaseOperation();
+    _databaseOperation.editRequest(
+      requestId: widget.requestId?? 0,
+    );
+  }
 }

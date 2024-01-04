@@ -6,7 +6,7 @@ import 'dart:math';
 import '../RequestDetailModels.dart';
 
  class DatabaseOperation {
-  final Random random = Random();
+   final Random random = Random();
 
    Future<List<Person>> fetchData() async {
      try {
@@ -163,44 +163,107 @@ import '../RequestDetailModels.dart';
      return false;
    }
 
-  Future<bool> signUp(String fullName, String email, String password, String phone, String gender, String bloodType, int age) async {
-    // Define a string named tcNo and value is random
-    String tcNo = random.nextInt(1000000000).toString();
+   Future<bool> signUp(String fullName, String email, String password,
+       String phone, String gender, String bloodType, int age) async {
+     // Define a string named tcNo and value is random
+     String tcNo = random.nextInt(1000000000).toString();
 
-    try {
-      final response = await http.post(
-        Uri.parse('http://20.241.134.230/users'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, dynamic>{
-          'fullName': fullName,
-          'email': email,
-          'password': password,
-          'phone': phone,
-          'gender': gender,
-          'bloodType': bloodType,
-          'age': age,
-          'tcNo': tcNo,
-          'lastDonationDate' : "2024-06-01",
-        }),
-      );
+     try {
+       final response = await http.post(
+         Uri.parse('http://20.241.134.230/users'),
+         headers: <String, String>{
+           'Content-Type': 'application/json; charset=UTF-8',
+         },
+         body: jsonEncode(<String, dynamic>{
+           'fullName': fullName,
+           'email': email,
+           'password': password,
+           'phone': phone,
+           'gender': gender,
+           'bloodType': bloodType,
+           'age': age,
+           'tcNo': tcNo,
+           'lastDonationDate': "2024-06-01",
+         }),
+       );
 
-      if (response.statusCode == 201) {
-        print('User registered successfully');
-        return true;
-      } else {
-        print('Error registering user: ${response.statusCode}');
-        print(response.body);
-        return false;
-      }
-    } catch (e) {
-      print('Error registering user: $e');
-      return false;  // Hata durumunda false döndür
-    }
-  }
+       if (response.statusCode == 201) {
+         print('User registered successfully');
+         return true;
+       } else {
+         print('Error registering user: ${response.statusCode}');
+         print(response.body);
+         return false;
+       }
+     } catch (e) {
+       print('Error registering user: $e');
+       return false; // Hata durumunda false döndür
+     }
+   }
 
+   Future<List<BloodRequest>> getUserRequests(String userEmail) async {
+     int userId = 0;
 
+     try {
+       final response2 = await http.get(
+           Uri.parse('http://20.241.134.230/users'));
 
+       for (var jsonData in json.decode(response2.body)) {
+         if (jsonData['email'] == userEmail) {
+           userId = jsonData['id'].toInt();
+         }
+       }
 
+       final response = await http.get(
+         Uri.parse('http://20.241.134.230/blood_requests/users/$userId'),
+       );
+
+       if (response.statusCode == 200) {
+         List<dynamic> jsonResponse = json.decode(response.body);
+         return jsonResponse.map((data) => BloodRequest.fromJson(data))
+             .toList();
+       } else {
+         throw Exception('Failed to load user requests');
+       }
+     } catch (e) {
+       print('Error fetching user requests: $e');
+       throw e;
+     }
+   }
+
+   void editRequest(
+       {required int requestId, String? newTitle, String? newDescription, String? newBloodType, String? newCity, String? newHospital}) async {
+     try {
+       int hospitalId = 0;
+       if (newHospital == 'Ankara') {
+         hospitalId = 2;
+       }
+       else {
+         hospitalId = 1;
+       };
+
+       final response = await http.put(
+         Uri.parse('http://20.241.134.230/blood_requests/$requestId'),
+         headers: <String, String>{
+           'Content-Type': 'application/json; charset=UTF-8',
+         },
+         body: jsonEncode(<String, dynamic>{
+           'title': newTitle ?? 'Updated Title',
+           'description': newDescription ?? 'Updated Description',
+           'bloodType': newBloodType ?? 'Updated Blood Type',
+           'city': newCity ?? 'Updated City',
+           'hospital': newHospital ?? 'Updated Hospital',
+         }),
+       );
+
+       if (response.statusCode == 200) {
+         print('Request updated successfully');
+       } else {
+         print('Error updating request: ${response.statusCode}');
+         print(response.body);
+       }
+     } catch (e) {
+       print('Error updating request: $e');
+     }
+   }
  }

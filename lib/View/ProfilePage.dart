@@ -1,3 +1,4 @@
+import 'package:beevent_flutter/View/MyRequests.dart';
 import 'package:flutter/material.dart';
 import 'package:beevent_flutter/View/Requests.dart';
 import 'package:beevent_flutter/View/AddRequestPage.dart';
@@ -144,7 +145,14 @@ class _ProfilePageState extends State<ProfilePage> {
               context,
               MaterialPageRoute(builder: (context) => Requests()),
             );
-          } else if (index == 2) {
+          }
+          else if(index == 1){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyRequests(userEmail: widget.userEmail)),
+            );
+          }
+          else if (index == 2) {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ProfilePage(userEmail: widget.userEmail)),
