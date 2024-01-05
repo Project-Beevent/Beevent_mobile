@@ -68,7 +68,7 @@ class _MyRequestsState extends State<MyRequests> {
                   icon: Icon(Icons.delete),
                   onPressed: () {
 
-                    //_deleteRequest(request.id);
+                    _deleteRequest(request.id);
                   },
                 ),
               ],
@@ -82,6 +82,14 @@ class _MyRequestsState extends State<MyRequests> {
     );
   }
 
+  Future<void> _deleteRequest(int id) async{
+    try {
+      await _databaseOperation.deleteRequest(id);
+      _loadUserRequests();
+    } catch (e) {
+      print('Error deleting request: $e');
+
+  }
 }
 
 void main() {
@@ -91,4 +99,5 @@ void main() {
       home: MyRequests(userEmail: 'example@example.com'),
     ),
   );
+}
 }

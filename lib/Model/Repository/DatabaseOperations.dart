@@ -266,4 +266,17 @@ import '../RequestDetailModels.dart';
        print('Error updating request: $e');
      }
    }
+
+  Future<void> deleteRequest(int id) async{
+    try {
+      final response = await http.delete(
+        Uri.parse('http://20.81.37.184/blood_requests/$id'),
+      );
+  }
+  catch (e) {
+      print('Error deleting request: $e');
+    }
+  }
+
+
  }
