@@ -11,7 +11,7 @@ import '../RequestDetailModels.dart';
    Future<List<Person>> fetchData() async {
      try {
        final response = await http.get(
-           Uri.parse('http://20.241.134.230/users'));
+           Uri.parse('http://20.81.37.184/users'));
        if (response.statusCode == 200) {
          List<dynamic> jsonList = json.decode(response.body);
          List<Person> personList = jsonList.map((json) => Person.fromJson(json))
@@ -32,7 +32,7 @@ import '../RequestDetailModels.dart';
    Future<String?> getPersonData(String email) async {
      try {
        final response = await http.get(
-           Uri.parse('http://20.241.134.230/users'));
+           Uri.parse('http://20.81.37.184/users'));
 
        if (response.statusCode == 200) {
          List<dynamic> jsonDataList = json.decode(response.body);
@@ -79,7 +79,7 @@ import '../RequestDetailModels.dart';
      };
      try {
        final response2 = await http.get(
-           Uri.parse('http://20.241.134.230/users'));
+           Uri.parse('http://20.81.37.184/users'));
        if (response2.statusCode == 200) {
          List<dynamic> jsonDataList = json.decode(response2.body);
          if (jsonDataList.isNotEmpty) {
@@ -97,7 +97,7 @@ import '../RequestDetailModels.dart';
 
        final response = await http.post(
          Uri.parse(
-             'http://20.241.134.230/blood_requests/users/$userId/hospitals/$hospitalId'),
+             'http://20.81.37.184/blood_requests/users/$userId/hospitals/$hospitalId'),
          headers: <String, String>{
            'Content-Type': 'application/json; charset=UTF-8',
          },
@@ -124,7 +124,7 @@ import '../RequestDetailModels.dart';
 
 
    Future<List<BloodRequest>> fetchBloodRequests() async {
-     final uri = Uri.parse('http://20.241.134.230/blood_requests');
+     final uri = Uri.parse('http://20.81.37.184/blood_requests');
      final response = await http.get(uri);
 
      if (response.statusCode == 200) {
@@ -138,7 +138,7 @@ import '../RequestDetailModels.dart';
    Future<bool> checkUser(String enteredEmail, String enteredPassword) async {
      try {
        final response = await http.get(
-           Uri.parse('http://20.241.134.230/users'));
+           Uri.parse('http://20.81.37.184/users'));
        if (response.statusCode == 200) {
          List<dynamic> jsonDataList = json.decode(response.body);
 
@@ -170,7 +170,7 @@ import '../RequestDetailModels.dart';
 
      try {
        final response = await http.post(
-         Uri.parse('http://20.241.134.230/users'),
+         Uri.parse('http://20.81.37.184/users'),
          headers: <String, String>{
            'Content-Type': 'application/json; charset=UTF-8',
          },
@@ -206,7 +206,7 @@ import '../RequestDetailModels.dart';
 
      try {
        final response2 = await http.get(
-           Uri.parse('http://20.241.134.230/users'));
+           Uri.parse('http://20.81.37.184/users'));
 
        for (var jsonData in json.decode(response2.body)) {
          if (jsonData['email'] == userEmail) {
@@ -215,7 +215,7 @@ import '../RequestDetailModels.dart';
        }
 
        final response = await http.get(
-         Uri.parse('http://20.241.134.230/blood_requests/users/$userId'),
+         Uri.parse('http://20.81.37.184/blood_requests/users/$userId'),
        );
 
        if (response.statusCode == 200) {
@@ -243,7 +243,7 @@ import '../RequestDetailModels.dart';
        };
 
        final response = await http.put(
-         Uri.parse('http://20.241.134.230/blood_requests/$requestId'),
+         Uri.parse('http://20.81.37.184/blood_requests/$requestId'),
          headers: <String, String>{
            'Content-Type': 'application/json; charset=UTF-8',
          },
